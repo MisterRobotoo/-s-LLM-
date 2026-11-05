@@ -75,7 +75,9 @@ text = " <|endoftext|> ".join((text1, text2))
 print(text)
 
 ids = tokenizer.encode(text)
-#print("Encoded ids: ", ids)
+
+print("Encoded ids: ", ids)
+print("Decoded text: ", tokenizer.decode(ids))
 
 
 #for i, item in enumerate(list(vocab.items())[-5:]):
