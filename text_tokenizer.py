@@ -9,7 +9,7 @@ urllib.request.urlretrieve(url, file_path)
 
 with open("the-verdict.txt", "r", encoding="utf-8") as f:
     raw_text = f.read()
-#print("Length of text: ", len(raw_text))
+print("Length of text: ", len(raw_text))
 #print("Raw text: ", raw_text[:99])
 
 #text = "Hello, world! Is this-- a test?"
@@ -17,22 +17,22 @@ with open("the-verdict.txt", "r", encoding="utf-8") as f:
 #result = [item.strip() for item in result if item.strip()]
 #print(result)
 
-#Text tokenizer
+    #Text tokenizer
 
 preprocessed = re.split(r'([,.:;?_!"()\']|--|\s)', raw_text)
 preprocessed = [item.strip() for item in preprocessed if item.strip()]
-#print("Number of tokens: ", len(preprocessed))
+print("Number of tokens: ", len(preprocessed))
 #print("Token list: ", preprocessed[:30])
 
-#Tokens convertion into ids
+    #Tokens convertion into ids
 
 all_words = sorted(set(preprocessed))
 vocab_size = len(all_words)
-#print("Vocab size: ", vocab_size)
+print("Vocab size: ", vocab_size)
 
 vocab = {token:integer for integer, token in enumerate(all_words)}
-for i, item in enumerate(vocab.items()):
-    #print(item)
+for i, item in enumerate(list(vocab.items())[-5:]):
+    print(item)
     if i >= 50:
         break
 
@@ -59,18 +59,19 @@ class SimpleTokenizer:
                                                                 #the punctuation mark itself
         return text
 
-#Adding a context window to the tokenizer
+    #Adding a context window to the tokenizer
 
 all_tokens = sorted(list(set(preprocessed)))
 all_tokens.extend(["<|endoftext|>", "<|unk|>"]) #unk = unknown token
 vocab = {token: integer for integer, token in enumerate(all_tokens)}
 
-#print("Vocab size: ", len(vocab.items()))
+print("Vocab size: ", len(vocab.items()))
 
 tokenizer = SimpleTokenizer(vocab)
 
-text1 = "Hello, Do you lioke tee?"
-text2 = "He went on sunny balcony of the castle"
+text1 = input("Enter the first text: ")
+text2 = input("Enter the second text: ")
+
 text = " <|endoftext|> ".join((text1, text2))
 print(text)
 
@@ -78,7 +79,3 @@ ids = tokenizer.encode(text)
 
 print("Encoded ids: ", ids)
 print("Decoded text: ", tokenizer.decode(ids))
-
-
-#for i, item in enumerate(list(vocab.items())[-5:]):
-#    print(item)
